@@ -13,13 +13,15 @@ const Home = ({
   selectedDay, 
   setSelectedDay, 
   selectedPayment, 
-  setSelectedPayment 
+  setSelectedPayment,
+  setCurrentPage  // <-- Agregar esta línea
 }) => {
   return (
     <div style={styles.homeScreen}>
       <Navbar 
         onLogout={onLogout} 
         styles={styles}
+        setCurrentPage={setCurrentPage}  // <-- Agregar esta línea
       />
 
       <div style={styles.mainContent}>
