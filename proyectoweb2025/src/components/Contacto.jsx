@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Contacto = ({ styles }) => {
+const Contacto = () => {
   const [formData, setFormData] = useState({
     nombre: '',
     correo: '',
@@ -513,7 +513,6 @@ const Contacto = ({ styles }) => {
           overflow: 'hidden',
           boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
         }}>
-          {/* Map Placeholder */}
           <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
             <circle cx="60" cy="60" r="40" fill="#4CAF50" opacity="0.2"/>
             <path d="M60 30C48.95 30 40 38.95 40 50c0 15 20 40 20 40s20-25 20-40c0-11.05-8.95-20-20-20zm0 27c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" fill="#4CAF50"/>

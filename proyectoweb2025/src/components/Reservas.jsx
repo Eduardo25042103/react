@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Reservas = ({ styles, setCurrentPage }) => {
+const Reservas = ({setCurrentPage }) => {
   const [selectedDate, setSelectedDate] = useState(10);
   const [selectedTime, setSelectedTime] = useState('7:30 PM');
   const [numPersonas, setNumPersonas] = useState(4);

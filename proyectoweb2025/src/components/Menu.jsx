@@ -14,7 +14,7 @@ import arroz_zambito from '../assets/arrozzambito.jpg';
 import torta_chocolate from '../assets/chocolatetorta.jpg';
 import queso_helado from '../assets/quesohelado.jpg';
 
-const Menu = ({ styles }) => {
+const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todas las categorías');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -162,17 +162,6 @@ const Menu = ({ styles }) => {
             objectFit: 'cover'
           }}
         />
-        <div style={{
-          display: 'none',
-          width: '100%',
-          height: '100%',
-          background: 'linear-gradient(135deg, #FFE8CC, #FFD9A3)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '60px'
-        }}>
-          {item.icon}
-        </div>
       </div>
       
       <div style={{ padding: '20px' }}>

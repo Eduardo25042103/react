@@ -1,12 +1,37 @@
 import React from 'react';
+import yape from '../assets/yape.png';
+import visa from '../assets/visa.png';
+import plin from '../assets/plin.png';
+import mastercard from '../assets/mastercard.png';
+import efectivo from '../assets/efectivo.png';
 
 const PaymentMethods = ({ styles, selectedPayment, setSelectedPayment }) => {
   const payments = [
-    { icon: '💳', name: 'Yape' },
-    { icon: '💳', name: 'Visa', hasLogo: true },
-    { icon: '💳', name: 'Plin' },
-    { icon: '💳', name: 'Mastercard', hasLogo: true },
-    { icon: '💵', name: 'Pago en efectivo' }
+    { 
+      id: 'yape',
+      name: 'Yape',
+      image: yape,
+    },
+    { 
+      id: 'visa',
+      name: 'Visa',
+      image: visa,
+    },
+    { 
+      id: 'plin',
+      name: 'Plin',
+      image: plin,
+    },
+    { 
+      id: 'mastercard',
+      name: 'Mastercard',
+      image: mastercard,
+    },
+    { 
+      id: 'efectivo',
+      name: 'Pago en efectivo',
+      image: efectivo,
+    }
   ];
 
   return (
@@ -25,15 +50,29 @@ const PaymentMethods = ({ styles, selectedPayment, setSelectedPayment }) => {
               ...(selectedPayment === idx ? styles.paymentItemSelected : {})
             }}
           >
-            <div style={styles.paymentIconWrapper}>
-              <span>{payment.icon}</span>
+            <div style={{
+              width: '45px',
+              height: '45px',
+              background: 'white',
+              borderRadius: '8px',
+              padding: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '1px solid #f0f0f0',
+              flexShrink: 0
+            }}>
+              <img 
+                src={payment.image}
+                alt={payment.name}
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  objectFit: 'contain'
+                }}
+              />
             </div>
             <div style={styles.paymentName}>{payment.name}</div>
-            {payment.hasLogo && (
-              <div style={styles.paymentLogos}>
-                <div style={styles.paymentLogo}>💳</div>
-              </div>
-            )}
           </div>
         ))}
       </div>

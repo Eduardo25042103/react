@@ -1,7 +1,7 @@
 import React from 'react';
 import pineImage from '../assets/pino.png';
 
-const Nosotros = ({ styles }) => {
+const Nosotros = () => {
   return (
     <div style={{
       background: '#F5F5F5',

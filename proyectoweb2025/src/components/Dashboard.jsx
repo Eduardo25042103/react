@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 
-const Dashboard = ({ styles, onLogout }) => {
+const Dashboard = ({onLogout }) => {
   const [activeSection, setActiveSection] = useState('overview');
   const [selectedFilter, setSelectedFilter] = useState('todas');
   const [selectedDate, setSelectedDate] = useState(10);
-  const [selectedCategory, setSelectedCategory] = useState('todas');
-  const [searchTerm, setSearchTerm] = useState('');
-  
+
   const statsData = {
     reservasHoy: 24,
     clientesHoy: 86,
@@ -84,7 +82,6 @@ const Dashboard = ({ styles, onLogout }) => {
 
     return (
       <div style={{ background: '#F8F9FA' }}>
-        {/* Header con tabs */}
         <div style={{
           background: 'white',
           padding: '20px 30px',
@@ -806,23 +803,6 @@ const Dashboard = ({ styles, onLogout }) => {
 
           {activeSection === 'overview' && renderOverview()}
           {(activeSection === 'calendar' || activeSection === 'reservas') && renderGestionReservas()}
-          {activeSection !== 'overview' && activeSection !== 'calendar' && activeSection !== 'reservas' && (
-            <div style={{
-              background: 'white',
-              padding: '60px',
-              borderRadius: '12px',
-              textAlign: 'center',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
-            }}>
-              <div style={{ fontSize: '48px', marginBottom: '20px' }}>🚧</div>
-              <h3 style={{ fontSize: '20px', color: '#333', marginBottom: '10px' }}>
-                Sección en desarrollo
-              </h3>
-              <p style={{ fontSize: '14px', color: '#666' }}>
-                Esta funcionalidad estará disponible próximamente
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import yape from '../assets/yape.png';
+import plin from '../assets/plin.png';
+import visa from '../assets/visa.png';
+import mastercard from '../assets/mastercard.png';
+import efectivo from '../assets/efectivo.png';
 
-const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
+const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [cardData, setCardData] = useState({
     numero: '',
@@ -10,11 +15,31 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
   });
 
   const paymentMethods = [
-    { id: 'yape', name: 'Yape', color: '#6B2C91', icon: '💳' },
-    { id: 'plin', name: 'Plin', color: '#00A9E0', icon: '💳' },
-    { id: 'visa', name: 'Visa', color: '#1A1F71', icon: '💳' },
-    { id: 'mastercard', name: 'Mastercard', color: '#EB001B', icon: '💳' },
-    { id: 'efectivo', name: 'Pago en efectivo', color: '#4CAF50', icon: '💵' }
+    { 
+      id: 'yape', 
+      name: 'Yape', 
+      image: yape,
+    },
+    { 
+      id: 'plin', 
+      name: 'Plin', 
+      image: plin,
+    },
+    { 
+      id: 'visa', 
+      name: 'Visa', 
+      image: visa,
+    },
+    { 
+      id: 'mastercard', 
+      name: 'Mastercard', 
+      image: mastercard
+    },
+    { 
+      id: 'efectivo', 
+      name: 'Pago en efectivo', 
+      image: efectivo
+    }
   ];
 
   const handleCardChange = (e) => {
@@ -86,7 +111,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
           <p style={{
             fontSize: '14px',
             color: '#666'
-          }}>¡Estás a un paso de asegurar tu mesa en El Pino!</p>
+          }}>Estas a un paso de asegurar tu mesa en El Pino</p>
         </div>
 
         <div style={{
@@ -108,13 +133,12 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                 gap: '10px',
                 marginBottom: '20px'
               }}>
-                <div style={{ fontSize: '24px' }}>💳</div>
                 <h3 style={{
                   fontSize: '18px',
                   fontWeight: '600',
                   color: '#333',
                   margin: 0
-                }}>Métodos de pago:</h3>
+                }}>Metodos de pago</h3>
               </div>
 
               <div style={{
@@ -143,16 +167,25 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                     }}
                   >
                     <div style={{
-                      width: '40px',
+                      width: '50px',
                       height: '40px',
-                      background: method.color,
+                      background: 'white',
                       borderRadius: '8px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '20px'
+                      padding: '8px',
+                      overflow: 'hidden'
                     }}>
-                      {method.icon}
+                      <img 
+                        src={method.image} 
+                        alt={method.name}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain'
+                        }}
+                      />
                     </div>
                     {method.name}
                   </button>
@@ -181,7 +214,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                     fontWeight: '500',
                     color: '#333',
                     marginBottom: '8px'
-                  }}>Número de tarjeta</label>
+                  }}>Numero de tarjeta</label>
                   <input
                     type="text"
                     name="numero"
@@ -317,7 +350,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                   paddingBottom: '12px',
                   borderBottom: '1px solid #e5e5e5'
                 }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Nombre:</span>
+                  <span style={{ fontSize: '13px', color: '#666' }}>Nombre</span>
                   <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
                     {reservaData?.nombre} {reservaData?.apellido}
                   </span>
@@ -330,7 +363,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                   paddingBottom: '12px',
                   borderBottom: '1px solid #e5e5e5'
                 }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Fecha:</span>
+                  <span style={{ fontSize: '13px', color: '#666' }}>Fecha</span>
                   <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
                     {reservaData?.selectedDate} Octubre 2025
                   </span>
@@ -343,7 +376,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                   paddingBottom: '12px',
                   borderBottom: '1px solid #e5e5e5'
                 }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Hora:</span>
+                  <span style={{ fontSize: '13px', color: '#666' }}>Hora</span>
                   <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
                     {reservaData?.selectedTime}
                   </span>
@@ -356,7 +389,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                   paddingBottom: '12px',
                   borderBottom: '1px solid #e5e5e5'
                 }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Mesa:</span>
+                  <span style={{ fontSize: '13px', color: '#666' }}>Mesa</span>
                   <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
                     Mesa {reservaData?.mesa?.numero}
                   </span>
@@ -369,7 +402,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                   paddingBottom: '12px',
                   borderBottom: '1px solid #e5e5e5'
                 }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Personas:</span>
+                  <span style={{ fontSize: '13px', color: '#666' }}>Personas</span>
                   <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
                     {reservaData?.personas} personas
                   </span>
@@ -379,9 +412,9 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                   display: 'flex',
                   justifyContent: 'space-between'
                 }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Ambiente:</span>
+                  <span style={{ fontSize: '13px', color: '#666' }}>Ambiente</span>
                   <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
-                    {reservaData?.mesa?.ambiente === 'interior' ? '🏠 Interior' : '🌳 Terraza'}
+                    {reservaData?.mesa?.ambiente === 'interior' ? 'Interior' : 'Terraza'}
                   </span>
                 </div>
               </div>
@@ -433,8 +466,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                 color: '#999',
                 marginBottom: '12px'
               }}>
-                <span>🔒</span>
-                <span>Tus datos están protegidos</span>
+                <span>Tus datos estan protegidos</span>
               </div>
 
               <div style={{
@@ -442,7 +474,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                 color: '#999',
                 textAlign: 'center'
               }}>
-                Transacción segura y encriptada
+                Transaccion segura y encriptada
               </div>
 
               <button
@@ -461,7 +493,7 @@ const ConfirmarPago = ({ styles, reservaData, onBack, onConfirm }) => {
                   transition: 'all 0.3s'
                 }}
               >
-                ← Volver
+                Volver
               </button>
             </div>
           </div>
