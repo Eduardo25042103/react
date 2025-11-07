@@ -148,11 +148,10 @@ const Dashboard = ({onLogout }) => {
             ))}
           </div>
 
-          {/* Buscador */}
           <div style={{ position: 'relative' }}>
             <input
               type="text"
-              placeholder="🔍 Buscar reserva..."
+              placeholder=" Buscar reserva..."
               style={{
                 width: '100%',
                 padding: '10px 16px',
