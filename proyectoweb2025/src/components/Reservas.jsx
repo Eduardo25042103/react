@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Reservas = ({ styles }) => {
+const Reservas = ({ styles, setCurrentPage }) => {
   const [selectedDate, setSelectedDate] = useState(10);
   const [selectedTime, setSelectedTime] = useState('7:30 PM');
   const [numPersonas, setNumPersonas] = useState(4);
@@ -12,7 +12,18 @@ const Reservas = ({ styles }) => {
   ];
 
   const daysInMonth = Array.from({ length: 31 }, (_, i) => i + 1);
-  const startDay = 3; // Octubre 2025 empieza en miércoles
+  const startDay = 3;
+
+  const handleContinue = () => {
+    if (setCurrentPage) {
+      const reservaInicial = {
+        selectedDate,
+        selectedTime,
+        numPersonas
+      };
+      setCurrentPage('seleccion-mesa');
+    }
+  };
 
   return (
     <div style={{
@@ -24,7 +35,6 @@ const Reservas = ({ styles }) => {
         maxWidth: '1200px',
         margin: '0 auto'
       }}>
-        {/* Header */}
         <div style={{
           textAlign: 'center',
           marginBottom: '40px'
@@ -41,16 +51,13 @@ const Reservas = ({ styles }) => {
           }}>Selecciona la fecha, hora y número de personas para tu reserva</p>
         </div>
 
-        {/* Main Content */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1.2fr 1fr',
           gap: '30px',
           alignItems: 'start'
         }}>
-          {/* Left Column - Calendar and Time */}
           <div>
-            {/* Calendar */}
             <div style={{
               background: 'white',
               padding: '30px',
@@ -93,7 +100,6 @@ const Reservas = ({ styles }) => {
                 </div>
               </div>
 
-              {/* Calendar Grid */}
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(7, 1fr)',
@@ -109,12 +115,10 @@ const Reservas = ({ styles }) => {
                   }}>{day}</div>
                 ))}
                 
-                {/* Empty cells for days before month starts */}
                 {Array.from({ length: startDay }).map((_, idx) => (
                   <div key={`empty-${idx}`}></div>
                 ))}
                 
-                {/* Days */}
                 {daysInMonth.map((day) => (
                   <button
                     key={day}
@@ -137,7 +141,6 @@ const Reservas = ({ styles }) => {
               </div>
             </div>
 
-            {/* Time Selection */}
             <div style={{
               background: 'white',
               padding: '30px',
@@ -182,7 +185,6 @@ const Reservas = ({ styles }) => {
             </div>
           </div>
 
-          {/* Right Column - Reservation Summary */}
           <div style={{
             background: 'white',
             padding: '30px',
@@ -198,7 +200,6 @@ const Reservas = ({ styles }) => {
               marginBottom: '25px'
             }}>Resumen de Reserva</h3>
 
-            {/* Fecha */}
             <div style={{ marginBottom: '20px' }}>
               <div style={{
                 fontSize: '12px',
@@ -212,7 +213,6 @@ const Reservas = ({ styles }) => {
               }}>Viernes, {selectedDate} de Octubre 2025</div>
             </div>
 
-            {/* Hora */}
             <div style={{ marginBottom: '20px' }}>
               <div style={{
                 fontSize: '12px',
@@ -226,7 +226,6 @@ const Reservas = ({ styles }) => {
               }}>{selectedTime}</div>
             </div>
 
-            {/* Número de personas */}
             <div style={{ marginBottom: '20px' }}>
               <div style={{
                 fontSize: '12px',
@@ -283,7 +282,6 @@ const Reservas = ({ styles }) => {
               </div>
             </div>
 
-            {/* Mesa */}
             <div style={{ marginBottom: '25px' }}>
               <div style={{
                 fontSize: '12px',
@@ -297,7 +295,6 @@ const Reservas = ({ styles }) => {
               }}>Mesa para {numPersonas} personas</div>
             </div>
 
-            {/* Costo */}
             <div style={{
               marginBottom: '25px',
               paddingTop: '20px',
@@ -315,19 +312,21 @@ const Reservas = ({ styles }) => {
               }}>S/ 0.00</div>
             </div>
 
-            {/* Button */}
-            <button style={{
-              width: '100%',
-              padding: '16px',
-              background: '#E89A5F',
-              color: 'white',
-              border: 'none',
-              borderRadius: '10px',
-              fontSize: '16px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.3s'
-            }}>
+            <button 
+              onClick={handleContinue}
+              style={{
+                width: '100%',
+                padding: '16px',
+                background: '#E89A5F',
+                color: 'white',
+                border: 'none',
+                borderRadius: '10px',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s'
+              }}
+            >
               Siguiente
             </button>
           </div>
