@@ -69,19 +69,21 @@ const Navbar = ({ onLogout, styles, setCurrentPage }) => {
         >
           Reservas
         </button>
-        <button
-          style={{
-            ...styles.navLink,
-            cursor: 'pointer',
-            background: 'none',
-            border: 'none',
-            padding: 0,
-            font: 'inherit'
-          }}
-        >
-          Contacto
-        </button>
+<button
+  onClick={() => handleNavClick('contacto')}
+  style={{
+    ...styles.navLink,
+    cursor: 'pointer',
+    background: 'none',
+    border: 'none',
+    padding: 0,
+    font: 'inherit'
+  }}
+>
+  Contacto
+</button>
       </div>
+      
 
       <div style={styles.navActions}>
         <button onClick={onLogout} style={styles.btnSalir}>

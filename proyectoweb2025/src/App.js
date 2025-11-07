@@ -5,6 +5,7 @@ import Menu from './components/Menu';
 import Nosotros from './components/Nosotros';
 import Reservas from './components/Reservas';
 import Navbar from './components/Navbar';
+import Contacto from './components/Contacto';
 import Footer from './components/Footer';
 import { useAuth } from './hooks/useAuth';
 import { styles } from './styles/styles';
@@ -53,6 +54,14 @@ function App() {
          <Footer styles={styles} />
         </div>
      );
+     case 'contacto':
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Navbar onLogout={logout} styles={styles} setCurrentPage={setCurrentPage} />
+      <Contacto styles={styles} />
+      <Footer styles={styles} />
+    </div>
+  );
       default:
         return (
           <Home
