@@ -1,5 +1,4 @@
 export const styles = {
-  // Login Screen Styles
   loginScreen: {
     minHeight: '100vh',
     background: '#F5F0E8',
@@ -112,7 +111,7 @@ export const styles = {
     background: '#F5F5F5',
   },
   navbar: {
-    background: '#5A8277',
+    background: '#2C5F4F',
     padding: '0 40px',
     display: 'flex',
     justifyContent: 'space-between',
@@ -184,7 +183,7 @@ export const styles = {
     gap: '25px',
   },
   heroCard: {
-    background: '#5A8277',
+    background: '#2C5F4F',
     borderRadius: '16px',
     padding: '35px',
     color: 'white',
@@ -192,6 +191,7 @@ export const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '20px',
+    overflow: 'hidden',
   },
   heroContent: {},
   heroTitle: {
@@ -203,6 +203,7 @@ export const styles = {
     fontSize: '24px',
     fontWeight: '600',
     margin: '12px 0 20px 0',
+    color: '#E8A839',
   },
   btnOrder: {
     background: 'white',
@@ -223,6 +224,8 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: '80px',
+    transform: 'translateY(60px)',
+    opacity: 0.7,
   },
   categoriesSection: {
     background: 'white',
@@ -435,7 +438,7 @@ export const styles = {
     fontSize: '16px',
   },
   footer: {
-    background: '#5A8277',
+    background: '#2C5F4F',
     padding: '35px 20px 20px',
     marginTop: '50px',
   },

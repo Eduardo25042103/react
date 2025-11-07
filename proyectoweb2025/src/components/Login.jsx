@@ -1,7 +1,7 @@
 import React from 'react';
+import imagenelPino from '../assets/pino.png';
 
 const Login = ({ onLogin, onAdminLogin, styles }) => {
-  const PINE_IMAGE_URL = "./assets/pino.png";
 
   return (
     <div style={styles.loginScreen}>
@@ -37,7 +37,7 @@ const Login = ({ onLogin, onAdminLogin, styles }) => {
         </div>
 
         <div style={styles.loginBrand}>
-          <img src={PINE_IMAGE_URL} alt="El Pino" style={styles.brandIcon} />
+          <img src={imagenelPino} alt="El Pino" style={styles.brandIcon} />
           <div style={styles.brandName}>El Pino</div>
           <div style={styles.brandTagline}>El sabor peruano</div>
         </div>

@@ -8,7 +8,9 @@ const HeroCard = ({ styles }) => {
         <div style={styles.heroPrice}>S/ 52.00</div>
         <button style={styles.btnOrder}>Ordenar ahora</button>
       </div>
-      <div style={styles.heroImage}>🍤</div>
+      <div style={styles.heroImage}>
+        <img src={require('../assets/cevichemixto.png')} alt="Ceviche Mixto" />
+      </div>
     </div>
   );
 };

@@ -1,9 +1,20 @@
 import React from 'react';
+import lomoImage from '../assets/lomosaltado.webp';
+import ajiImage from '../assets/gallinaaji.png';
 
 const PopularItems = ({ styles }) => {
   const items = [
-    { icon: '🥩', name: 'Lomo saltado', price: 'S/ 42.00' },
-    { icon: '🍗', name: 'Ají de gallina', oldPrice: 'S/ 43.00', price: 'S/ 32.00' }
+    { 
+      name: 'Lomo saltado', 
+      price: 'S/ 42.00',
+      image:  lomoImage
+    },
+    { 
+      name: 'Ají de gallina', 
+      oldPrice: 'S/ 43.00', 
+      price: 'S/ 32.00',
+      image: ajiImage
+    }
   ];
 
   return (
@@ -15,7 +26,26 @@ const PopularItems = ({ styles }) => {
 
       {items.map((item, idx) => (
         <div key={idx} style={styles.popularItem}>
-          <div style={styles.popularImage}>{item.icon}</div>
+          <div style={{
+            ...styles.popularImage,
+            background: 'none',
+            overflow: 'hidden',
+            position: 'relative'
+          }}>
+            <img 
+              src={item.image} 
+              alt={item.name}
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+            />
+          </div>
           <div style={styles.popularInfo}>
             <div style={styles.popularName}>{item.name}</div>
             {item.oldPrice && (

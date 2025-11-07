@@ -1,14 +1,15 @@
 import React from 'react';
+import imagenelPino from '../assets/pino.png';
 
 const Footer = ({ styles }) => {
-  const PINE_IMAGE_URL = "/assets/pino.webp";
+  
 
   return (
     <footer style={styles.footer}>
       <div style={styles.footerContent}>
         <div>
           <div style={styles.footerLogo}>
-            <img src={PINE_IMAGE_URL} alt="El Pino" style={styles.footerIcon} />
+            <img src={imagenelPino} alt="El Pino" style={styles.footerIcon} />
             <span>El Pino</span>
           </div>
           <div style={styles.footerDescription}>

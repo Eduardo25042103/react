@@ -16,7 +16,7 @@ const Calendar = ({ styles, selectedDay, setSelectedDay }) => {
         ))}
         <div style={styles.dayCell}></div>
         <div style={styles.dayCell}></div>
-        {[...Array(19)].map((_, idx) => {
+        {[...Array(31)].map((_, idx) => {
           const dayNum = idx + 1;
           return (
             <div

@@ -7,7 +7,6 @@ const Categories = ({ styles }) => {
       bg: '#C5E5E0',
       icon: (
         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Pez */}
           <ellipse cx="35" cy="30" rx="18" ry="12" fill="#2C5F5D"/>
           <path d="M17 30L10 24L17 26L10 36L17 34Z" fill="#2C5F5D"/>
           <circle cx="42" cy="28" r="2" fill="white"/>
@@ -24,7 +23,6 @@ const Categories = ({ styles }) => {
       bg: '#FFE8CC',
       icon: (
         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Causa Limeña */}
           <ellipse cx="30" cy="44" rx="20" ry="4" fill="#D4824B" opacity="0.2"/>
           <rect x="15" y="35" width="30" height="8" rx="1" fill="#F4D03F"/>
           <rect x="15" y="27" width="30" height="8" rx="1" fill="#E8B44C"/>
@@ -43,8 +41,7 @@ const Categories = ({ styles }) => {
       bg: '#FFD4E5',
       icon: (
         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Helado */}
-          <path d="M25 35L23 48C23 48 24 50 30 50C36 50 37 48 37 48L35 35" fill="#F4A460"/>
+                    <path d="M25 35L23 48C23 48 24 50 30 50C36 50 37 48 37 48L35 35" fill="#F4A460"/>
           <path d="M25 35L27 36L30 48L33 36L35 35Z" fill="#D2691E"/>
           <circle cx="30" cy="28" r="8" fill="#FFB6D9"/>
           <circle cx="25" cy="22" r="6" fill="#FF69B4"/>

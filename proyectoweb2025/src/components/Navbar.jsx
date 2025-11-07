@@ -1,7 +1,7 @@
 import React from 'react';
+import imagenelPino from '../assets/pino.png';
 
 const Navbar = ({ onLogout, styles, setCurrentPage }) => {
-  const PINE_IMAGE_URL = "/assets/pino.webp";
 
   const handleNavClick = (page) => {
     if (setCurrentPage) {
@@ -12,7 +12,7 @@ const Navbar = ({ onLogout, styles, setCurrentPage }) => {
   return (
     <nav style={styles.navbar}>
       <div style={styles.navLogo}>
-        <img src={PINE_IMAGE_URL} alt="El Pino" style={styles.navIcon} />
+        <img src={imagenelPino} alt="El Pino" style={styles.navIcon} />
         <span style={styles.navText}>El Pino</span>
       </div>
 

@@ -1,14 +1,12 @@
 import React from 'react';
+import pineImage from '../assets/pino.png';
 
 const Nosotros = ({ styles }) => {
-  const PINE_IMAGE_URL = "/assets/pino.webp";
-
   return (
     <div style={{
       background: '#F5F5F5',
       minHeight: 'calc(100vh - 70px)'
     }}>
-      {/* Hero Section */}
       <div style={{
         background: '#5A8277',
         color: 'white',
@@ -28,13 +26,13 @@ const Nosotros = ({ styles }) => {
         }}>Más de 20 años sirviendo la auténtica gastronomía peruana con pasión y dedicación</p>
       </div>
 
-      {/* Main Content */}
+      
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
         padding: '50px 20px'
       }}>
-        {/* About Section */}
+        
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
@@ -78,7 +76,6 @@ const Nosotros = ({ styles }) => {
           </div>
 
           <div style={{
-            background: '#5A8277',
             borderRadius: '16px',
             padding: '60px',
             display: 'flex',
@@ -87,7 +84,7 @@ const Nosotros = ({ styles }) => {
             justifyContent: 'center',
             minHeight: '400px'
           }}>
-            <img src={PINE_IMAGE_URL} alt="El Pino" style={{
+            <img src={pineImage} alt="El Pino" style={{
               width: '150px',
               height: 'auto',
               marginBottom: '20px'
@@ -96,20 +93,14 @@ const Nosotros = ({ styles }) => {
               fontSize: '48px',
               fontWeight: '300',
               fontStyle: 'italic',
-              color: 'white',
+              color: '#2C5F4F',
               fontFamily: 'Brush Script MT, cursive',
               marginBottom: '10px'
             }}>EL PINO</div>
-            <div style={{
-              fontSize: '18px',
-              color: 'white',
-              fontStyle: 'italic',
-              opacity: 0.9
-            }}>El sabor peruano</div>
           </div>
         </div>
 
-        {/* Stats Section */}
+        
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
@@ -144,7 +135,7 @@ const Nosotros = ({ styles }) => {
           ))}
         </div>
 
-        {/* Values Section */}
+     
         <div>
           <h2 style={{
             fontSize: '28px',
