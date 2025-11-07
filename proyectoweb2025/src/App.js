@@ -3,6 +3,7 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Menu from './components/Menu';
 import Nosotros from './components/Nosotros';
+import Reservas from './components/Reservas';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { useAuth } from './hooks/useAuth';
@@ -44,6 +45,14 @@ function App() {
             <Footer styles={styles} />
           </div>
         );
+      case 'reservas':
+        return (
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+         <Navbar onLogout={logout} styles={styles} setCurrentPage={setCurrentPage} />
+         <Reservas styles={styles} />
+         <Footer styles={styles} />
+        </div>
+     );
       default:
         return (
           <Home
@@ -55,6 +64,7 @@ function App() {
             setSelectedPayment={setSelectedPayment}
           />
         );
+        
     }
   };
 

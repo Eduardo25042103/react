@@ -57,6 +57,7 @@ const Navbar = ({ onLogout, styles, setCurrentPage }) => {
           Nosotros
         </button>
         <button
+          onClick={() => handleNavClick('reservas')}
           style={{
             ...styles.navLink,
             cursor: 'pointer',
