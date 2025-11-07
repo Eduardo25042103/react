@@ -169,7 +169,6 @@ const Dashboard = ({ styles, onLogout }) => {
           </div>
         </div>
 
-        {/* Grid principal */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 380px',
