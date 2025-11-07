@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import imagenelPino from '../assets/pino.png';
 
-const Dashboard = ({onLogout }) => {
+const Dashboard = ({styles, onLogout }) => {
   const [activeSection, setActiveSection] = useState('overview');
   const [selectedFilter, setSelectedFilter] = useState('todas');
   const [selectedDate, setSelectedDate] = useState(10);
@@ -683,7 +684,7 @@ const Dashboard = ({onLogout }) => {
           alignItems: 'center',
           gap: '12px'
         }}>
-          <div style={{ fontSize: '24px' }}>🌲</div>
+          <img src={imagenelPino} alt="El Pino" style={styles.navIcon} />
           <span style={{ fontSize: '22px', fontStyle: 'italic' }}>El Pino</span>
         </div>
 
@@ -801,7 +802,7 @@ const Dashboard = ({onLogout }) => {
           </div>
 
           {activeSection === 'overview' && renderOverview()}
-          {(activeSection === 'calendar' || activeSection === 'reservas') && renderGestionReservas()}
+          {activeSection === 'reservas' && renderGestionReservas()}
         </div>
       </div>
     </div>
