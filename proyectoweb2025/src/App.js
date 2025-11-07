@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import Menu from './components/Menu';
 import Nosotros from './components/Nosotros';
@@ -13,7 +14,7 @@ import { useAuth } from './hooks/useAuth';
 import { styles } from './styles/styles';
 
 function App() {
-  const { isLoggedIn, login, logout } = useAuth();
+  const { isLoggedIn, isAdmin, login, loginAsAdmin, logout } = useAuth();
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedDay, setSelectedDay] = useState(10);
   const [selectedPayment, setSelectedPayment] = useState(null);
@@ -129,7 +130,16 @@ function App() {
   return (
     <div>
       {!isLoggedIn ? (
-        <Login onLogin={login} styles={styles} />
+        <Login 
+          onLogin={login} 
+          onAdminLogin={loginAsAdmin}
+          styles={styles} 
+        />
+      ) : isAdmin ? (
+        <Dashboard 
+          styles={styles}
+          onLogout={logout}
+        />
       ) : (
         renderPage()
       )}

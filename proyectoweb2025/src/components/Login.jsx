@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Login = ({ onLogin, styles }) => {
+const Login = ({ onLogin, onAdminLogin, styles }) => {
   const PINE_IMAGE_URL = "./assets/pino.png";
 
   return (
@@ -44,8 +44,18 @@ const Login = ({ onLogin, styles }) => {
       </div>
 
       <div style={styles.loginFooter}>
-        <button style={styles.footerBtn}>admin</button>
-        <button style={styles.footerBtn}>client</button>
+        <button 
+          onClick={onAdminLogin}
+          style={styles.footerBtn}
+        >
+          admin
+        </button>
+        <button 
+          onClick={onLogin}
+          style={styles.footerBtn}
+        >
+          client
+        </button>
       </div>
     </div>
   );
