@@ -16,11 +16,6 @@ const Reservas = ({setCurrentPage }) => {
 
   const handleContinue = () => {
     if (setCurrentPage) {
-      const reservaInicial = {
-        selectedDate,
-        selectedTime,
-        numPersonas
-      };
       setCurrentPage('seleccion-mesa');
     }
   };
