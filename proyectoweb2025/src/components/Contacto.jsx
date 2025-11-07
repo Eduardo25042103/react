@@ -19,7 +19,6 @@ const Contacto = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Formulario enviado:', formData);
-    // Aquí puedes agregar la lógica para enviar el formulario
     alert('Mensaje enviado correctamente');
   };
 
@@ -29,7 +28,6 @@ const Contacto = () => {
       minHeight: 'calc(100vh - 70px)',
       padding: '40px 20px'
     }}>
-      {/* Header */}
       <div style={{
         textAlign: 'center',
         marginBottom: '50px'
@@ -42,7 +40,6 @@ const Contacto = () => {
         }}>Contactos</h1>
       </div>
 
-      {/* Main Content */}
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
@@ -51,7 +48,6 @@ const Contacto = () => {
         gap: '40px',
         marginBottom: '60px'
       }}>
-        {/* Contact Form */}
         <div style={{
           background: 'white',
           padding: '40px',
@@ -74,7 +70,6 @@ const Contacto = () => {
           </p>
 
           <form onSubmit={handleSubmit}>
-            {/* Nombre completo */}
             <div style={{ marginBottom: '20px' }}>
               <label style={{
                 display: 'block',
@@ -101,7 +96,6 @@ const Contacto = () => {
               />
             </div>
 
-            {/* Correo Electronico */}
             <div style={{ marginBottom: '20px' }}>
               <label style={{
                 display: 'block',
@@ -128,7 +122,6 @@ const Contacto = () => {
               />
             </div>
 
-            {/* Telefono */}
             <div style={{ marginBottom: '20px' }}>
               <label style={{
                 display: 'block',
@@ -155,7 +148,6 @@ const Contacto = () => {
               />
             </div>
 
-            {/* Asunto */}
             <div style={{ marginBottom: '20px' }}>
               <label style={{
                 display: 'block',
@@ -182,7 +174,6 @@ const Contacto = () => {
               />
             </div>
 
-            {/* Mensaje */}
             <div style={{ marginBottom: '25px' }}>
               <label style={{
                 display: 'block',
@@ -211,7 +202,6 @@ const Contacto = () => {
               />
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               style={{
@@ -232,7 +222,7 @@ const Contacto = () => {
           </form>
         </div>
 
-        {/* Contact Information */}
+
         <div style={{
           background: 'white',
           padding: '40px',
@@ -246,7 +236,7 @@ const Contacto = () => {
             marginBottom: '30px'
           }}>Informacion de Contacto</h2>
 
-          {/* Direccion */}
+ 
           <div style={{
             display: 'flex',
             gap: '15px',
@@ -285,7 +275,7 @@ const Contacto = () => {
             </div>
           </div>
 
-          {/* Telefono */}
+      
           <div style={{
             display: 'flex',
             gap: '15px',
@@ -324,7 +314,7 @@ const Contacto = () => {
             </div>
           </div>
 
-          {/* Email */}
+        
           <div style={{
             display: 'flex',
             gap: '15px',
@@ -363,7 +353,7 @@ const Contacto = () => {
             </div>
           </div>
 
-          {/* Horario */}
+        
           <div style={{
             display: 'flex',
             gap: '15px'
@@ -401,7 +391,7 @@ const Contacto = () => {
             </div>
           </div>
 
-          {/* Social Media */}
+        
           <div style={{
             marginTop: '35px',
             paddingTop: '30px',
@@ -482,7 +472,6 @@ const Contacto = () => {
         </div>
       </div>
 
-      {/* Map Section */}
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto'
