@@ -7,10 +7,20 @@ import Calendar from './Calendar';
 import PaymentMethods from './PaymentMethods';
 import Footer from './Footer';
 
-const Home = ({ onLogout, styles, selectedDay, setSelectedDay, selectedPayment, setSelectedPayment }) => {
+const Home = ({ 
+  onLogout, 
+  styles, 
+  selectedDay, 
+  setSelectedDay, 
+  selectedPayment, 
+  setSelectedPayment 
+}) => {
   return (
     <div style={styles.homeScreen}>
-      <Navbar onLogout={onLogout} styles={styles} />
+      <Navbar 
+        onLogout={onLogout} 
+        styles={styles}
+      />
 
       <div style={styles.mainContent}>
         <div>

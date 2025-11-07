@@ -1,7 +1,13 @@
 import React from 'react';
 
-const Navbar = ({ onLogout, styles }) => {
+const Navbar = ({ onLogout, styles, setCurrentPage }) => {
   const PINE_IMAGE_URL = "/assets/pino.webp";
+
+  const handleNavClick = (page) => {
+    if (setCurrentPage) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <nav style={styles.navbar}>
@@ -11,11 +17,69 @@ const Navbar = ({ onLogout, styles }) => {
       </div>
 
       <div style={styles.navLinks}>
-        <a href="#" style={styles.navLink}>Inicio</a>
-        <a href="#" style={styles.navLink}>Menú</a>
-        <a href="#" style={styles.navLink}>Nosotros</a>
-        <a href="#" style={styles.navLink}>Reservas</a>
-        <a href="#" style={styles.navLink}>Contacto</a>
+        <button
+          onClick={() => handleNavClick('home')}
+          style={{
+            ...styles.navLink,
+            cursor: 'pointer',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            font: 'inherit'
+          }}
+        >
+          Inicio
+        </button>
+        <button
+          onClick={() => handleNavClick('menu')}
+          style={{
+            ...styles.navLink,
+            cursor: 'pointer',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            font: 'inherit'
+          }}
+        >
+          Menú
+        </button>
+        <button
+          onClick={() => handleNavClick('nosotros')}
+          style={{
+            ...styles.navLink,
+            cursor: 'pointer',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            font: 'inherit'
+          }}
+        >
+          Nosotros
+        </button>
+        <button
+          style={{
+            ...styles.navLink,
+            cursor: 'pointer',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            font: 'inherit'
+          }}
+        >
+          Reservas
+        </button>
+        <button
+          style={{
+            ...styles.navLink,
+            cursor: 'pointer',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            font: 'inherit'
+          }}
+        >
+          Contacto
+        </button>
       </div>
 
       <div style={styles.navActions}>
