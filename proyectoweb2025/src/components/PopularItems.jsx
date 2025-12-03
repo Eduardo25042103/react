@@ -42,11 +42,16 @@ const PopularItems = ({ styles, agregarAlCarrito }) => {
       </div>
 
       {items.map((item, idx) => (
-        <div key={idx} style={{
-          ...styles.popularItem,
-          position: 'relative',
-          background: itemAgregado === item.id ? '#F0FFF4' : 'transparent'
-        }}>
+        <div 
+          key={idx} 
+          className="popular-item-hover"
+          style={{
+            ...styles.popularItem,
+            position: 'relative',
+            background: itemAgregado === item.id ? '#F0FFF4' : 'transparent',
+            transition: 'all 0.3s ease'
+          }}
+        >
           {itemAgregado === item.id && (
             <div style={{
               position: 'absolute',
@@ -94,6 +99,7 @@ const PopularItems = ({ styles, agregarAlCarrito }) => {
           </div>
           <button 
             onClick={() => handleAgregarAlCarrito(item)}
+            className="btn-add-hover"
             style={{
               ...styles.btnAdd,
               background: itemAgregado === item.id ? '#4CAF50' : '#E89A5F',
@@ -116,6 +122,17 @@ const PopularItems = ({ styles, agregarAlCarrito }) => {
             transform: translateY(0);
             opacity: 1;
           }
+        }
+
+        .popular-item-hover:hover {
+          background: #F9F9F9 !important;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .popular-item-hover:hover .btn-add-hover {
+          transform: scale(1.15);
+          box-shadow: 0 4px 8px rgba(232, 154, 95, 0.3);
         }
       `}</style>
     </div>

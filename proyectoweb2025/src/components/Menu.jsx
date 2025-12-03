@@ -160,15 +160,19 @@ const Menu = ({ agregarAlCarrito }) => {
   };
 
   const renderMenuItem = (item, idx) => (
-    <div key={idx} style={{
-      background: 'white',
-      border: '1px solid #e5e5e5',
-      borderRadius: '12px',
-      overflow: 'hidden',
-      cursor: 'pointer',
-      transition: 'all 0.3s',
-      position: 'relative'
-    }}>
+    <div 
+      key={idx} 
+      className="menu-item-card"
+      style={{
+        background: 'white',
+        border: '1px solid #e5e5e5',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        position: 'relative'
+      }}
+    >
       {/* Badge de "Agregado" */}
       {itemAgregado === item.id && (
         <div style={{
@@ -198,6 +202,7 @@ const Menu = ({ agregarAlCarrito }) => {
         <img 
           src={item.image} 
           alt={item.name}
+          className="menu-item-image"
           onError={(e) => {
             e.target.style.display = 'none';
             e.target.nextSibling.style.display = 'flex';
@@ -205,7 +210,8 @@ const Menu = ({ agregarAlCarrito }) => {
           style={{
             width: '100%',
             height: '100%',
-            objectFit: 'cover'
+            objectFit: 'cover',
+            transition: 'transform 0.3s ease'
           }}
         />
       </div>
@@ -238,6 +244,7 @@ const Menu = ({ agregarAlCarrito }) => {
           
           <button 
             onClick={() => handleAgregarAlCarrito(item)}
+            className="menu-btn-add"
             style={{
               background: itemAgregado === item.id ? '#4CAF50' : '#E89A5F',
               color: 'white',
@@ -250,7 +257,7 @@ const Menu = ({ agregarAlCarrito }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'all 0.3s',
+              transition: 'all 0.3s ease',
               transform: itemAgregado === item.id ? 'scale(1.1)' : 'scale(1)'
             }}
           >
@@ -269,6 +276,25 @@ const Menu = ({ agregarAlCarrito }) => {
             transform: translateY(0);
             opacity: 1;
           }
+        }
+
+        .menu-item-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+          border-color: #E89A5F;
+        }
+
+        .menu-item-card:hover .menu-item-image {
+          transform: scale(1.05);
+        }
+
+        .menu-item-card:hover .menu-btn-add {
+          transform: scale(1.2) rotate(90deg);
+          box-shadow: 0 4px 12px rgba(232, 154, 95, 0.4);
+        }
+
+        .menu-item-card .menu-btn-add {
+          transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
       `}</style>
     </div>
