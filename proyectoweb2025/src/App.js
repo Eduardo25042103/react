@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Welcome from './components/Welcome';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
@@ -15,10 +16,19 @@ import { styles } from './styles/styles';
 
 function App() {
   const { isLoggedIn, isAdmin, login, loginAsAdmin, logout } = useAuth();
+  const [showWelcome, setShowWelcome] = useState(true);
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedDay, setSelectedDay] = useState(10);
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [reservaData, setReservaData] = useState(null);
+
+  const handleEnterFromWelcome = () => {
+    setShowWelcome(false);
+  };
+
+  const handleGuestLogin = () => {
+    login(); // Entra como cliente normal (invitado)
+  };
 
   const renderPage = () => {
     switch(currentPage) {
@@ -127,22 +137,37 @@ function App() {
     }
   };
 
+  // Si aún está en la pantalla de bienvenida
+  if (showWelcome) {
+    return <Welcome onEnter={handleEnterFromWelcome} styles={styles} />;
+  }
+
+  // Si no está logueado, mostrar login
+  if (!isLoggedIn) {
+    return (
+      <Login 
+        onLogin={login} 
+        onAdminLogin={loginAsAdmin}
+        onGuestLogin={handleGuestLogin}
+        styles={styles} 
+      />
+    );
+  }
+
+  // Si está logueado como admin
+  if (isAdmin) {
+    return (
+      <Dashboard 
+        styles={styles}
+        onLogout={logout}
+      />
+    );
+  }
+
+  // Si está logueado como cliente/invitado
   return (
     <div>
-      {!isLoggedIn ? (
-        <Login 
-          onLogin={login} 
-          onAdminLogin={loginAsAdmin}
-          styles={styles} 
-        />
-      ) : isAdmin ? (
-        <Dashboard 
-          styles={styles}
-          onLogout={logout}
-        />
-      ) : (
-        renderPage()
-      )}
+      {renderPage()}
     </div>
   );
 }
