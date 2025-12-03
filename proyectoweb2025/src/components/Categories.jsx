@@ -3,8 +3,7 @@ import ceviches from '../assets/ceviches.png';
 import criollos from '../assets/criollo.png';
 import postres from '../assets/postre.webp';
 
-
-const Categories = ({ styles }) => {
+const Categories = ({ styles, setCurrentPage }) => {
   const categories = [
     { 
       name: 'Ceviches',
@@ -23,7 +22,13 @@ const Categories = ({ styles }) => {
     }
   ];
 
- return (
+  const handleCategoryClick = () => {
+    if (setCurrentPage) {
+      setCurrentPage('menu');
+    }
+  };
+
+  return (
     <div style={styles.categoriesSection}>
       <div style={styles.sectionTitle}>
         <span>CATEGORIAS</span>
@@ -32,9 +37,20 @@ const Categories = ({ styles }) => {
         {categories.map((cat, idx) => (
           <div 
             key={idx} 
+            onClick={handleCategoryClick}
             style={{
               ...styles.categoryItem,
-              background: cat.bg
+              background: cat.bg,
+              cursor: 'pointer',
+              transition: 'all 0.3s'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
             }}
           >
             <div style={styles.categoryIcon}>

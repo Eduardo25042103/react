@@ -14,31 +14,36 @@ import arroz_zambito from '../assets/arrozzambito.jpg';
 import torta_chocolate from '../assets/chocolatetorta.jpg';
 import queso_helado from '../assets/quesohelado.jpg';
 
-const Menu = () => {
+const Menu = ({ agregarAlCarrito }) => {
   const [selectedCategory, setSelectedCategory] = useState('Todas las categorías');
   const [searchTerm, setSearchTerm] = useState('');
+  const [itemAgregado, setItemAgregado] = useState(null);
 
   const menuItems = {
     ceviches: [
       { 
+        id: 'cev-1',
         name: 'Ceviche clásico', 
         description: 'Pescado fresco, limón, cebolla', 
         price: 'S/ 45.00', 
         image: ceviche_clasico,
       },
       { 
+        id: 'cev-2',
         name: 'Ceviche de langostino y pescado', 
         description: 'Mezcla de pescado y camarón', 
         price: 'S/ 40.00', 
         image: ceviche_langostino,
       },
       { 
+        id: 'cev-3',
         name: 'Ceviche mixto', 
         description: 'Pescado fresco, mixto, cebolla', 
         price: 'S/ 47.00', 
         image: ceviche_mixto,
       },
       { 
+        id: 'cev-4',
         name: 'Ceviche carretillero', 
         description: 'Pescado fresco, limón, cebolla', 
         price: 'S/ 44.00', 
@@ -47,24 +52,28 @@ const Menu = () => {
     ],
     criollos: [
       { 
+        id: 'cri-1',
         name: 'Ají de gallina', 
         description: 'Pollo deshilachado, crema de ají amarillo', 
         price: 'S/ 32.00', 
         image: aji_gallina
       },
       { 
+        id: 'cri-2',
         name: 'Arroz con mariscos', 
         description: 'Arroz, mariscos mixtos de la casa', 
         price: 'S/ 28.00', 
         image: arroz_mariscos,
       },
       { 
+        id: 'cri-3',
         name: 'Causa limeña', 
         description: 'Papa, palta amarillo, crema, tunto', 
         price: 'S/ 24.00', 
         image: causa_limena,
       },
       { 
+        id: 'cri-4',
         name: 'Lomo saltado', 
         description: 'Carne de res papas, tomate, cebolla', 
         price: 'S/ 42.00', 
@@ -73,36 +82,42 @@ const Menu = () => {
     ],
     postres: [
       { 
+        id: 'pos-1',
         name: 'Suspiro Limeño', 
         description: 'Dulce de leche, merengue italiano', 
         price: 'S/ 17.50', 
         image: suspiro_limeno,
       },
       { 
+        id: 'pos-2',
         name: 'Pudín de Jalea de Fresa', 
         description: 'Fresa, leche, pan con jamón', 
         price: 'S/ 14.50', 
         image: pudin_fresa,
       },
       { 
+        id: 'pos-3',
         name: 'Mazamorra Morada', 
         description: 'Fruta morada, azúcar', 
         price: 'S/ 15.50', 
         image: mazamorra_morada,
       },
       { 
+        id: 'pos-4',
         name: 'Arroz Zambito', 
         description: 'Arroz con leche, caramelo', 
         price: 'S/ 17.50', 
         image: arroz_zambito,
       },
       { 
+        id: 'pos-5',
         name: 'Torta de chocolate', 
         description: 'Chocolate y ingredientes', 
         price: 'S/ 16.50', 
         image: torta_chocolate,
       },
       { 
+        id: 'pos-6',
         name: 'Queso Helado', 
         description: 'Crema leche, queso', 
         price: 'S/ 18.50', 
@@ -134,6 +149,16 @@ const Menu = () => {
     return items;
   };
 
+  const handleAgregarAlCarrito = (item) => {
+    agregarAlCarrito(item);
+    setItemAgregado(item.id);
+    
+    // Remover la animación después de 2 segundos
+    setTimeout(() => {
+      setItemAgregado(null);
+    }, 2000);
+  };
+
   const renderMenuItem = (item, idx) => (
     <div key={idx} style={{
       background: 'white',
@@ -141,8 +166,29 @@ const Menu = () => {
       borderRadius: '12px',
       overflow: 'hidden',
       cursor: 'pointer',
-      transition: 'all 0.3s'
+      transition: 'all 0.3s',
+      position: 'relative'
     }}>
+      {/* Badge de "Agregado" */}
+      {itemAgregado === item.id && (
+        <div style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          background: '#4CAF50',
+          color: 'white',
+          padding: '6px 12px',
+          borderRadius: '20px',
+          fontSize: '12px',
+          fontWeight: '600',
+          zIndex: 10,
+          boxShadow: '0 2px 8px rgba(76, 175, 80, 0.3)',
+          animation: 'slideInDown 0.3s'
+        }}>
+          ✓ Agregado
+        </div>
+      )}
+
       <div style={{
         width: '100%',
         height: '180px',
@@ -190,21 +236,41 @@ const Menu = () => {
             color: '#D4824B'
           }}>{item.price}</span>
           
-          <button style={{
-            background: '#E89A5F',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            width: '36px',
-            height: '36px',
-            fontSize: '20px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>+</button>
+          <button 
+            onClick={() => handleAgregarAlCarrito(item)}
+            style={{
+              background: itemAgregado === item.id ? '#4CAF50' : '#E89A5F',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              width: '36px',
+              height: '36px',
+              fontSize: '20px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.3s',
+              transform: itemAgregado === item.id ? 'scale(1.1)' : 'scale(1)'
+            }}
+          >
+            {itemAgregado === item.id ? '✓' : '+'}
+          </button>
         </div>
       </div>
+
+      <style>{`
+        @keyframes slideInDown {
+          from {
+            transform: translateY(-20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 
@@ -267,7 +333,7 @@ const Menu = () => {
           }}>
             <input
               type="text"
-              placeholder="Buscar"
+              placeholder="🔍 Buscar plato..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{

@@ -14,21 +14,36 @@ const Home = ({
   setSelectedDay, 
   selectedPayment, 
   setSelectedPayment,
-  setCurrentPage  // <-- Agregar esta línea
+  setCurrentPage,
+  carrito,
+  setMostrarCarrito,
+  agregarAlCarrito
 }) => {
   return (
     <div style={styles.homeScreen}>
       <Navbar 
         onLogout={onLogout} 
         styles={styles}
-        setCurrentPage={setCurrentPage}  // <-- Agregar esta línea
+        setCurrentPage={setCurrentPage}
+        carrito={carrito}
+        setMostrarCarrito={setMostrarCarrito}
       />
 
       <div style={styles.mainContent}>
         <div>
-          <HeroCard styles={styles} />
-          <Categories styles={styles} />
-          <PopularItems styles={styles} />
+          <HeroCard 
+            styles={styles}
+            agregarAlCarrito={agregarAlCarrito}
+            setCurrentPage={setCurrentPage}
+          />
+          <Categories 
+            styles={styles}
+            setCurrentPage={setCurrentPage}
+          />
+          <PopularItems 
+            styles={styles}
+            agregarAlCarrito={agregarAlCarrito}
+          />
         </div>
 
         <div style={styles.sidebar}>

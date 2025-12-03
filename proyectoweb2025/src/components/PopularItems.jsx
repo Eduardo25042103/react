@@ -1,21 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import lomoImage from '../assets/lomosaltado.webp';
 import ajiImage from '../assets/gallinaaji.png';
 
-const PopularItems = ({ styles }) => {
+const PopularItems = ({ styles, agregarAlCarrito }) => {
+  const [itemAgregado, setItemAgregado] = useState(null);
+
   const items = [
     { 
+      id: 'pop-lomo',
       name: 'Lomo saltado', 
+      description: 'Carne de res papas, tomate, cebolla',
       price: 'S/ 42.00',
-      image:  lomoImage
+      image: lomoImage
     },
     { 
-      name: 'Ají de gallina', 
+      id: 'pop-aji',
+      name: 'Ají de gallina',
+      description: 'Pollo deshilachado, crema de ají amarillo',
       oldPrice: 'S/ 43.00', 
       price: 'S/ 32.00',
       image: ajiImage
     }
   ];
+
+  const handleAgregarAlCarrito = (item) => {
+    if (agregarAlCarrito) {
+      agregarAlCarrito(item);
+      setItemAgregado(item.id);
+      
+      setTimeout(() => {
+        setItemAgregado(null);
+      }, 2000);
+    }
+  };
 
   return (
     <div style={styles.popularSection}>
@@ -25,7 +42,29 @@ const PopularItems = ({ styles }) => {
       </div>
 
       {items.map((item, idx) => (
-        <div key={idx} style={styles.popularItem}>
+        <div key={idx} style={{
+          ...styles.popularItem,
+          position: 'relative',
+          background: itemAgregado === item.id ? '#F0FFF4' : 'transparent'
+        }}>
+          {itemAgregado === item.id && (
+            <div style={{
+              position: 'absolute',
+              top: '8px',
+              right: '8px',
+              background: '#4CAF50',
+              color: 'white',
+              padding: '4px 10px',
+              borderRadius: '12px',
+              fontSize: '11px',
+              fontWeight: '600',
+              zIndex: 10,
+              animation: 'slideInDown 0.3s'
+            }}>
+              ✓ Agregado
+            </div>
+          )}
+
           <div style={{
             ...styles.popularImage,
             background: 'none',
@@ -53,9 +92,32 @@ const PopularItems = ({ styles }) => {
             )}
             <div style={styles.popularPrice}>{item.price}</div>
           </div>
-          <button style={styles.btnAdd}>+</button>
+          <button 
+            onClick={() => handleAgregarAlCarrito(item)}
+            style={{
+              ...styles.btnAdd,
+              background: itemAgregado === item.id ? '#4CAF50' : '#E89A5F',
+              transform: itemAgregado === item.id ? 'scale(1.1)' : 'scale(1)',
+              transition: 'all 0.3s'
+            }}
+          >
+            {itemAgregado === item.id ? '✓' : '+'}
+          </button>
         </div>
       ))}
+
+      <style>{`
+        @keyframes slideInDown {
+          from {
+            transform: translateY(-10px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 };

@@ -11,6 +11,7 @@ import ConfirmarPago from './components/ConfirmarPago';
 import Navbar from './components/Navbar';
 import Contacto from './components/Contacto';
 import Footer from './components/Footer';
+import Carrito from './components/Carrito';
 import { useAuth } from './hooks/useAuth';
 import { styles } from './styles/styles';
 
@@ -21,13 +22,59 @@ function App() {
   const [selectedDay, setSelectedDay] = useState(10);
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [reservaData, setReservaData] = useState(null);
+  
+  // Estado del carrito
+  const [carrito, setCarrito] = useState([]);
+  const [mostrarCarrito, setMostrarCarrito] = useState(false);
 
   const handleEnterFromWelcome = () => {
     setShowWelcome(false);
+    login(); // Login automático como invitado
+    setCurrentPage('home'); // Ir al inicio
   };
 
   const handleGuestLogin = () => {
-    login(); // Entra como cliente normal (invitado)
+    login();
+  };
+
+  // Funciones del carrito
+  const agregarAlCarrito = (item) => {
+    const itemExistente = carrito.find(i => i.id === item.id);
+    
+    if (itemExistente) {
+      setCarrito(carrito.map(i => 
+        i.id === item.id 
+          ? { ...i, cantidad: i.cantidad + 1 }
+          : i
+      ));
+    } else {
+      setCarrito([...carrito, { ...item, cantidad: 1 }]);
+    }
+  };
+
+  const eliminarDelCarrito = (itemId) => {
+    setCarrito(carrito.filter(item => item.id !== itemId));
+  };
+
+  const actualizarCantidad = (itemId, cantidad) => {
+    if (cantidad <= 0) {
+      eliminarDelCarrito(itemId);
+    } else {
+      setCarrito(carrito.map(item =>
+        item.id === itemId ? { ...item, cantidad } : item
+      ));
+    }
+  };
+
+  const vaciarCarrito = () => {
+    setCarrito([]);
+  };
+
+  const calcularTotal = () => {
+    return carrito.reduce((total, item) => {
+      const precio = parseFloat(item.price.replace('S/ ', ''));
+      return total + (precio * item.cantidad);
+    }, 0);
   };
 
   const renderPage = () => {
@@ -42,20 +89,38 @@ function App() {
             selectedPayment={selectedPayment}
             setSelectedPayment={setSelectedPayment}
             setCurrentPage={setCurrentPage}
+            carrito={carrito}
+            setMostrarCarrito={setMostrarCarrito}
+            agregarAlCarrito={agregarAlCarrito}
           />
         );
       case 'menu':
         return (
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar onLogout={logout} styles={styles} setCurrentPage={setCurrentPage} />
-            <Menu styles={styles} />
+            <Navbar 
+              onLogout={logout} 
+              styles={styles} 
+              setCurrentPage={setCurrentPage}
+              carrito={carrito}
+              setMostrarCarrito={setMostrarCarrito}
+            />
+            <Menu 
+              styles={styles}
+              agregarAlCarrito={agregarAlCarrito}
+            />
             <Footer styles={styles} />
           </div>
         );
       case 'nosotros':
         return (
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar onLogout={logout} styles={styles} setCurrentPage={setCurrentPage} />
+            <Navbar 
+              onLogout={logout} 
+              styles={styles} 
+              setCurrentPage={setCurrentPage}
+              carrito={carrito}
+              setMostrarCarrito={setMostrarCarrito}
+            />
             <Nosotros styles={styles} />
             <Footer styles={styles} />
           </div>
@@ -63,7 +128,13 @@ function App() {
       case 'reservas':
         return (
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar onLogout={logout} styles={styles} setCurrentPage={setCurrentPage} />
+            <Navbar 
+              onLogout={logout} 
+              styles={styles} 
+              setCurrentPage={setCurrentPage}
+              carrito={carrito}
+              setMostrarCarrito={setMostrarCarrito}
+            />
             <Reservas 
               styles={styles} 
               setCurrentPage={setCurrentPage}
@@ -78,7 +149,13 @@ function App() {
       case 'seleccion-mesa':
         return (
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar onLogout={logout} styles={styles} setCurrentPage={setCurrentPage} />
+            <Navbar 
+              onLogout={logout} 
+              styles={styles} 
+              setCurrentPage={setCurrentPage}
+              carrito={carrito}
+              setMostrarCarrito={setMostrarCarrito}
+            />
             <SeleccionMesa 
               styles={styles}
               reservaData={reservaData}
@@ -94,7 +171,13 @@ function App() {
       case 'confirmar-pago':
         return (
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar onLogout={logout} styles={styles} setCurrentPage={setCurrentPage} />
+            <Navbar 
+              onLogout={logout} 
+              styles={styles} 
+              setCurrentPage={setCurrentPage}
+              carrito={carrito}
+              setMostrarCarrito={setMostrarCarrito}
+            />
             <ConfirmarPago 
               styles={styles}
               reservaData={reservaData}
@@ -117,7 +200,13 @@ function App() {
       case 'contacto':
         return (
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar onLogout={logout} styles={styles} setCurrentPage={setCurrentPage} />
+            <Navbar 
+              onLogout={logout} 
+              styles={styles} 
+              setCurrentPage={setCurrentPage}
+              carrito={carrito}
+              setMostrarCarrito={setMostrarCarrito}
+            />
             <Contacto styles={styles} />
             <Footer styles={styles} />
           </div>
@@ -132,17 +221,18 @@ function App() {
             selectedPayment={selectedPayment}
             setSelectedPayment={setSelectedPayment}
             setCurrentPage={setCurrentPage}
+            carrito={carrito}
+            setMostrarCarrito={setMostrarCarrito}
+            agregarAlCarrito={agregarAlCarrito}
           />
         );
     }
   };
 
-  // Si aún está en la pantalla de bienvenida
   if (showWelcome) {
     return <Welcome onEnter={handleEnterFromWelcome} styles={styles} />;
   }
 
-  // Si no está logueado, mostrar login
   if (!isLoggedIn) {
     return (
       <Login 
@@ -154,7 +244,6 @@ function App() {
     );
   }
 
-  // Si está logueado como admin
   if (isAdmin) {
     return (
       <Dashboard 
@@ -164,10 +253,21 @@ function App() {
     );
   }
 
-  // Si está logueado como cliente/invitado
   return (
     <div>
       {renderPage()}
+      
+      {/* Carrito flotante */}
+      {mostrarCarrito && (
+        <Carrito
+          carrito={carrito}
+          onClose={() => setMostrarCarrito(false)}
+          actualizarCantidad={actualizarCantidad}
+          eliminarDelCarrito={eliminarDelCarrito}
+          vaciarCarrito={vaciarCarrito}
+          calcularTotal={calcularTotal}
+        />
+      )}
     </div>
   );
 }
