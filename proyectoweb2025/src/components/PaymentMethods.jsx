@@ -8,28 +8,28 @@ import efectivo from '../assets/efectivo.png';
 const PaymentMethods = ({ styles, selectedPayment, setSelectedPayment }) => {
   const payments = [
     { 
-      id: 'yape',
+      id: 0,
       name: 'Yape',
       image: yape,
     },
     { 
-      id: 'visa',
+      id: 1,
       name: 'Visa',
       image: visa,
     },
     { 
-      id: 'plin',
+      id: 2,
       name: 'Plin',
       image: plin,
     },
     { 
-      id: 'mastercard',
+      id: 3,
       name: 'Mastercard',
       image: mastercard,
     },
     { 
-      id: 'efectivo',
-      name: 'Pago en efectivo',
+      id: 4,
+      name: 'Efectivo',
       image: efectivo,
     }
   ];
@@ -41,13 +41,16 @@ const PaymentMethods = ({ styles, selectedPayment, setSelectedPayment }) => {
         <span>Métodos de pago:</span>
       </div>
       <div style={styles.paymentMethods}>
-        {payments.map((payment, idx) => (
+        {payments.map((payment) => (
           <div
-            key={idx}
-            onClick={() => setSelectedPayment(idx)}
+            key={payment.id}
+            onClick={() => {
+              console.log('Método de pago seleccionado:', payment.id, payment.name);
+              setSelectedPayment(payment.id);
+            }}
             style={{
               ...styles.paymentItem,
-              ...(selectedPayment === idx ? styles.paymentItemSelected : {})
+              ...(selectedPayment === payment.id ? styles.paymentItemSelected : {})
             }}
           >
             <div style={{

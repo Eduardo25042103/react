@@ -104,7 +104,7 @@ export const styles = {
     fontSize: '13px',
     cursor: 'pointer',
   },
-  // Home Screen Styles
+
   homeScreen: {
     display: 'block',
     minHeight: '100vh',

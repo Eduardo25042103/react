@@ -296,6 +296,7 @@ function App() {
           eliminarDelCarrito={eliminarDelCarrito}
           vaciarCarrito={vaciarCarrito}
           calcularTotal={calcularTotal}
+          selectedPayment={selectedPayment}
         />
       )}
     </div>

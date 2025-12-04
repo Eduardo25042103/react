@@ -1,4 +1,9 @@
 import React from 'react';
+import yape from '../assets/yape.png';
+import visa from '../assets/visa.png';
+import plin from '../assets/plin.png';
+import mastercard from '../assets/mastercard.png';
+import efectivo from '../assets/efectivo.png';
 
 const Carrito = ({ 
   carrito, 
@@ -6,8 +11,30 @@ const Carrito = ({
   actualizarCantidad, 
   eliminarDelCarrito,
   vaciarCarrito,
-  calcularTotal 
+  calcularTotal,
+  selectedPayment
 }) => {
+  
+  const paymentMethods = [
+    { id: 0, name: 'Yape', image: yape },
+    { id: 1, name: 'Visa', image: visa },
+    { id: 2, name: 'Plin', image: plin },
+    { id: 3, name: 'Mastercard', image: mastercard },
+    { id: 4, name: 'Efectivo', image: efectivo }
+  ];
+  
+  const getSelectedPaymentInfo = () => {
+    console.log('Selected payment en carrito:', selectedPayment);
+    if (selectedPayment !== null && selectedPayment !== undefined) {
+      const payment = paymentMethods.find(p => p.id === selectedPayment);
+      console.log('Payment encontrado:', payment);
+      return payment;
+    }
+    return null;
+  };
+  
+  const paymentInfo = getSelectedPaymentInfo();
+  console.log('PaymentInfo:', paymentInfo);
   
   const handleConfirmarPedido = () => {
     if (carrito.length === 0) {
@@ -19,9 +46,12 @@ const Carrito = ({
       `${item.name} x${item.cantidad} - ${item.price}`
     ).join('\n');
     
+    const metodoPago = paymentInfo ? paymentInfo.name : 'No seleccionado';
+    
     alert(
       `¡Pedido confirmado!\n\n` +
       `Detalles:\n${detallesPedido}\n\n` +
+      `Método de pago: ${metodoPago}\n` +
       `Total: S/ ${calcularTotal().toFixed(2)}\n\n` +
       `Tu pedido será preparado y estará listo en tu mesa.`
     );
@@ -327,6 +357,75 @@ const Carrito = ({
             borderTop: '2px solid #e5e5e5',
             background: '#F9F9F9'
           }}>
+            {/* Método de pago seleccionado */}
+            {paymentInfo && (
+              <div style={{
+                background: 'white',
+                padding: '15px',
+                borderRadius: '10px',
+                marginBottom: '20px',
+                border: '1px solid #e5e5e5'
+              }}>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#999',
+                  marginBottom: '8px',
+                  fontWeight: '500'
+                }}>Método de pago seleccionado:</div>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px'
+                }}>
+                  <div style={{
+                    width: '50px',
+                    height: '40px',
+                    background: '#F9F9F9',
+                    borderRadius: '8px',
+                    padding: '6px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid #f0f0f0'
+                  }}>
+                    <img 
+                      src={paymentInfo.image}
+                      alt={paymentInfo.name}
+                      style={{
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: '#333'
+                  }}>{paymentInfo.name}</div>
+                </div>
+              </div>
+            )}
+            
+            {/* Mensaje si no hay método de pago */}
+            {!paymentInfo && (
+              <div style={{
+                background: '#FFF5EE',
+                padding: '12px',
+                borderRadius: '8px',
+                marginBottom: '20px',
+                border: '1px solid #FFE8CC',
+                fontSize: '12px',
+                color: '#E89A5F',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <span style={{ fontSize: '16px' }}>ℹ️</span>
+                <span>Selecciona un método de pago en la página principal</span>
+              </div>
+            )}
+            
             <div style={{
               display: 'flex',
               justifyContent: 'space-between',
