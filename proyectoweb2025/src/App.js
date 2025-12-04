@@ -23,17 +23,31 @@ function App() {
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [reservaData, setReservaData] = useState(null);
   
+  // Estado del usuario
+  const [userName, setUserName] = useState('');
+  const [isGuest, setIsGuest] = useState(true);
+  
   // Estado del carrito
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
 
   const handleEnterFromWelcome = () => {
     setShowWelcome(false);
-    login(); // Login automático como invitado
-    setCurrentPage('home'); // Ir al inicio
+    setIsGuest(true);
+    setUserName('');
+    login();
+    setCurrentPage('home');
   };
 
   const handleGuestLogin = () => {
+    setIsGuest(true);
+    setUserName('');
+    login();
+  };
+
+  const handleUserLogin = (name) => {
+    setIsGuest(false);
+    setUserName(name);
     login();
   };
 
@@ -92,6 +106,8 @@ function App() {
             carrito={carrito}
             setMostrarCarrito={setMostrarCarrito}
             agregarAlCarrito={agregarAlCarrito}
+            userName={userName}
+            isGuest={isGuest}
           />
         );
       case 'menu':
@@ -103,6 +119,8 @@ function App() {
               setCurrentPage={setCurrentPage}
               carrito={carrito}
               setMostrarCarrito={setMostrarCarrito}
+              userName={userName}
+              isGuest={isGuest}
             />
             <Menu 
               styles={styles}
@@ -120,6 +138,8 @@ function App() {
               setCurrentPage={setCurrentPage}
               carrito={carrito}
               setMostrarCarrito={setMostrarCarrito}
+              userName={userName}
+              isGuest={isGuest}
             />
             <Nosotros styles={styles} />
             <Footer styles={styles} />
@@ -134,6 +154,8 @@ function App() {
               setCurrentPage={setCurrentPage}
               carrito={carrito}
               setMostrarCarrito={setMostrarCarrito}
+              userName={userName}
+              isGuest={isGuest}
             />
             <Reservas 
               styles={styles} 
@@ -155,6 +177,8 @@ function App() {
               setCurrentPage={setCurrentPage}
               carrito={carrito}
               setMostrarCarrito={setMostrarCarrito}
+              userName={userName}
+              isGuest={isGuest}
             />
             <SeleccionMesa 
               styles={styles}
@@ -177,6 +201,8 @@ function App() {
               setCurrentPage={setCurrentPage}
               carrito={carrito}
               setMostrarCarrito={setMostrarCarrito}
+              userName={userName}
+              isGuest={isGuest}
             />
             <ConfirmarPago 
               styles={styles}
@@ -206,6 +232,8 @@ function App() {
               setCurrentPage={setCurrentPage}
               carrito={carrito}
               setMostrarCarrito={setMostrarCarrito}
+              userName={userName}
+              isGuest={isGuest}
             />
             <Contacto styles={styles} />
             <Footer styles={styles} />
@@ -224,6 +252,8 @@ function App() {
             carrito={carrito}
             setMostrarCarrito={setMostrarCarrito}
             agregarAlCarrito={agregarAlCarrito}
+            userName={userName}
+            isGuest={isGuest}
           />
         );
     }
@@ -236,7 +266,7 @@ function App() {
   if (!isLoggedIn) {
     return (
       <Login 
-        onLogin={login} 
+        onLogin={(name) => handleUserLogin(name)} 
         onAdminLogin={loginAsAdmin}
         onGuestLogin={handleGuestLogin}
         styles={styles} 

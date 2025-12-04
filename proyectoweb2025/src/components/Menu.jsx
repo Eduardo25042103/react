@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ceviche_clasico from '../assets/CEVICHE.png';
 import ceviche_langostino from '../assets/cevichee.jpg';
 import ceviche_mixto from '../assets/cevichemixto.png';
@@ -18,6 +18,16 @@ const Menu = ({ agregarAlCarrito }) => {
   const [selectedCategory, setSelectedCategory] = useState('Todas las categorías');
   const [searchTerm, setSearchTerm] = useState('');
   const [itemAgregado, setItemAgregado] = useState(null);
+
+  // Leer la categoría seleccionada desde localStorage al cargar
+  useEffect(() => {
+    const savedCategory = localStorage.getItem('selectedCategory');
+    if (savedCategory) {
+      setSelectedCategory(savedCategory);
+      // Limpiar el localStorage después de leer
+      localStorage.removeItem('selectedCategory');
+    }
+  }, []);
 
   const menuItems = {
     ceviches: [
@@ -153,7 +163,6 @@ const Menu = ({ agregarAlCarrito }) => {
     agregarAlCarrito(item);
     setItemAgregado(item.id);
     
-    // Remover la animación después de 2 segundos
     setTimeout(() => {
       setItemAgregado(null);
     }, 2000);
@@ -173,7 +182,6 @@ const Menu = ({ agregarAlCarrito }) => {
         position: 'relative'
       }}
     >
-      {/* Badge de "Agregado" */}
       {itemAgregado === item.id && (
         <div style={{
           position: 'absolute',

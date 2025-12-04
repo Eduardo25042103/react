@@ -49,7 +49,8 @@ const PopularItems = ({ styles, agregarAlCarrito }) => {
             ...styles.popularItem,
             position: 'relative',
             background: itemAgregado === item.id ? '#F0FFF4' : 'transparent',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            alignItems: 'center'
           }}
         >
           {itemAgregado === item.id && (
@@ -86,11 +87,17 @@ const PopularItems = ({ styles, agregarAlCarrito }) => {
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover'
+                objectFit: 'cover',
+                borderRadius: '10px'
               }}
             />
           </div>
-          <div style={styles.popularInfo}>
+          <div style={{
+            ...styles.popularInfo,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center'
+          }}>
             <div style={styles.popularName}>{item.name}</div>
             {item.oldPrice && (
               <div style={styles.popularDiscount}>{item.oldPrice}</div>
@@ -104,7 +111,8 @@ const PopularItems = ({ styles, agregarAlCarrito }) => {
               ...styles.btnAdd,
               background: itemAgregado === item.id ? '#4CAF50' : '#E89A5F',
               transform: itemAgregado === item.id ? 'scale(1.1)' : 'scale(1)',
-              transition: 'all 0.3s'
+              transition: 'all 0.3s',
+              alignSelf: 'center'
             }}
           >
             {itemAgregado === item.id ? '✓' : '+'}

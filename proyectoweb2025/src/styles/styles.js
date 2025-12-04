@@ -270,8 +270,9 @@ export const styles = {
     padding: '25px',
     borderRadius: '12px',
   },
-  popularItem: {
+   popularItem: {
     display: 'flex',
+    alignItems: 'center',
     gap: '15px',
     padding: '12px',
     borderRadius: '10px',

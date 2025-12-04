@@ -17,7 +17,9 @@ const Home = ({
   setCurrentPage,
   carrito,
   setMostrarCarrito,
-  agregarAlCarrito
+  agregarAlCarrito,
+  userName,
+  isGuest
 }) => {
   return (
     <div style={styles.homeScreen}>
@@ -27,6 +29,8 @@ const Home = ({
         setCurrentPage={setCurrentPage}
         carrito={carrito}
         setMostrarCarrito={setMostrarCarrito}
+        userName={userName}
+        isGuest={isGuest}
       />
 
       <div style={styles.mainContent}>
