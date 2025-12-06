@@ -5,6 +5,32 @@ import plin from '../assets/plin.png';
 import mastercard from '../assets/mastercard.png';
 import efectivo from '../assets/efectivo.png';
 
+// SVG Icons
+const DishIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10"/>
+    <circle cx="12" cy="12" r="6"/>
+    <circle cx="12" cy="12" r="2"/>
+  </svg>
+);
+
+const TrashIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="3 6 5 6 21 6"/>
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+    <line x1="10" y1="11" x2="10" y2="17"/>
+    <line x1="14" y1="11" x2="14" y2="17"/>
+  </svg>
+);
+
+const InfoIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="12" y1="16" x2="12" y2="12"/>
+    <line x1="12" y1="8" x2="12.01" y2="8"/>
+  </svg>
+);
+
 const Carrito = ({ 
   carrito, 
   onClose, 
@@ -147,10 +173,13 @@ const Carrito = ({
               color: '#999'
             }}>
               <div style={{
-                fontSize: '64px',
                 marginBottom: '15px',
-                opacity: 0.3
-              }}>🍽️</div>
+                opacity: 0.3,
+                display: 'flex',
+                justifyContent: 'center'
+              }}>
+                <DishIcon />
+              </div>
               <p style={{
                 fontSize: '16px',
                 fontWeight: '500',
@@ -202,9 +231,10 @@ const Carrito = ({
                           height: '100%',
                           display: 'flex',
                           alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '32px'
-                        }}>🍽️</div>
+                          justifyContent: 'center'
+                        }}>
+                          <DishIcon />
+                        </div>
                       )}
                     </div>
 
@@ -239,14 +269,13 @@ const Carrito = ({
                         color: '#f44336',
                         borderRadius: '8px',
                         cursor: 'pointer',
-                        fontSize: '16px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexShrink: 0
                       }}
                     >
-                      🗑️
+                      <TrashIcon />
                     </button>
                   </div>
 
@@ -340,10 +369,14 @@ const Carrito = ({
                     fontWeight: '500',
                     cursor: 'pointer',
                     marginTop: '10px',
-                    transition: 'all 0.2s'
+                    transition: 'all 0.2s',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px'
                   }}
                 >
-                  🗑️ Vaciar carrito
+                  <TrashIcon /> Vaciar carrito
                 </button>
               )}
             </>
@@ -421,7 +454,7 @@ const Carrito = ({
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <span style={{ fontSize: '16px' }}>ℹ️</span>
+                <InfoIcon />
                 <span>Selecciona un método de pago en la página principal</span>
               </div>
             )}
