@@ -21,6 +21,10 @@ const Home = ({
   userName,
   isGuest
 }) => {
+  const handleDateSelect = (day) => {
+    setCurrentPage('reservas');
+  };
+
   return (
     <div style={styles.homeScreen}>
       <Navbar 
@@ -54,7 +58,8 @@ const Home = ({
           <Calendar 
             styles={styles} 
             selectedDay={selectedDay} 
-            setSelectedDay={setSelectedDay} 
+            setSelectedDay={setSelectedDay}
+            onDateSelect={handleDateSelect}
           />
           <PaymentMethods 
             styles={styles} 

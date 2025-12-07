@@ -145,81 +145,122 @@ function App() {
             <Footer styles={styles} />
           </div>
         );
-      case 'reservas':
-        return (
-          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar 
-              onLogout={logout} 
-              styles={styles} 
-              setCurrentPage={setCurrentPage}
-              carrito={carrito}
-              setMostrarCarrito={setMostrarCarrito}
-              userName={userName}
-              isGuest={isGuest}
-            />
-            <Reservas 
-              styles={styles} 
-              setCurrentPage={setCurrentPage}
-              onContinue={(data) => {
-                setReservaData(data);
-                setCurrentPage('seleccion-mesa');
-              }}
-            />
-            <Footer styles={styles} />
-          </div>
-        );
-      case 'seleccion-mesa':
-        return (
-          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar 
-              onLogout={logout} 
-              styles={styles} 
-              setCurrentPage={setCurrentPage}
-              carrito={carrito}
-              setMostrarCarrito={setMostrarCarrito}
-              userName={userName}
-              isGuest={isGuest}
-            />
-            <SeleccionMesa 
-              styles={styles}
-              reservaData={reservaData}
-              onBack={() => setCurrentPage('reservas')}
-              onConfirm={(data) => {
-                setReservaData(data);
-                setCurrentPage('confirmar-pago');
-              }}
-            />
-            <Footer styles={styles} />
-          </div>
-        );
-      case 'confirmar-pago':
-        return (
-          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Navbar 
-              onLogout={logout} 
-              styles={styles} 
-              setCurrentPage={setCurrentPage}
-              carrito={carrito}
-              setMostrarCarrito={setMostrarCarrito}
-              userName={userName}
-              isGuest={isGuest}
-            />
-            <ConfirmarPago 
-              styles={styles}
-              reservaData={reservaData}
-              onBack={() => setCurrentPage('seleccion-mesa')}
-              onConfirm={(data) => {
-                setReservaData(data);
-                alert('¡Reserva confirmada exitosamente!\n\nDetalles:\n' + 
-                      `Mesa: ${data.mesa.numero}\n` +
-                      `Fecha: ${data.selectedDate} de Octubre\n` +
-                      `Hora: ${data.selectedTime}\n` +
-                      `Personas: ${data.personas}\n` +
-                      `Cliente: ${data.nombre} ${data.apellido}\n` +
-                      `Pago: ${data.paymentMethod}`);
-                setCurrentPage('home');
-              }}
-            />
+case 'reservas':
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Navbar 
+        onLogout={logout} 
+        styles={styles} 
+        setCurrentPage={setCurrentPage}
+        carrito={carrito}
+        setMostrarCarrito={setMostrarCarrito}
+        userName={userName}
+        isGuest={isGuest}
+      />
+      <Reservas 
+        styles={styles} 
+        setCurrentPage={setCurrentPage}
+        selectedDay={selectedDay}
+        selectedPayment={selectedPayment}
+        carrito={carrito}
+        onContinue={(data) => {
+          setReservaData({
+            ...data,
+            selectedPayment,
+            carrito
+          });
+          setCurrentPage('seleccion-mesa');
+        }}
+      />
+      <Footer styles={styles} />
+    </div>
+  );
+
+case 'seleccion-mesa':
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Navbar 
+        onLogout={logout} 
+        styles={styles} 
+        setCurrentPage={setCurrentPage}
+        carrito={carrito}
+        setMostrarCarrito={setMostrarCarrito}
+        userName={userName}
+        isGuest={isGuest}
+      />
+      <SeleccionMesa 
+        styles={styles}
+        reservaData={reservaData}
+        onBack={() => setCurrentPage('reservas')}
+        onConfirm={(data) => {
+          setReservaData({
+            ...data,
+            selectedPayment,
+            carrito
+          });
+          setCurrentPage('confirmar-pago');
+        }}
+      />
+      <Footer styles={styles} />
+    </div>
+  );
+
+case 'confirmar-pago':
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Navbar 
+        onLogout={logout} 
+        styles={styles} 
+        setCurrentPage={setCurrentPage}
+        carrito={carrito}
+        setMostrarCarrito={setMostrarCarrito}
+        userName={userName}
+        isGuest={isGuest}
+      />
+<ConfirmarPago 
+        styles={styles}
+        reservaData={reservaData}
+        selectedPayment={selectedPayment}
+        carrito={carrito}
+        onBack={() => setCurrentPage('seleccion-mesa')}
+        onConfirm={(data) => {
+          setReservaData(data);
+          
+          // Construir mensaje de confirmación
+          let mensaje = '¡Reserva confirmada exitosamente!\n\nDetalles:\n' + 
+                `Mesa: ${data.mesa.numero}\n` +
+                `Fecha: ${data.selectedDate} de Octubre\n` +
+                `Hora: ${data.selectedTime}\n` +
+                `Personas: ${data.personas}\n` +
+                `Cliente: ${data.nombre} ${data.apellido}\n` +
+                `Pago: ${data.paymentMethod}\n`;
+          
+          // Agregar detalles del menú si hay
+          if (carrito && carrito.length > 0) {
+            mensaje += '\nMenú seleccionado:\n';
+            carrito.forEach(item => {
+              mensaje += `- ${item.name} x${item.cantidad}\n`;
+            });
+            
+            const totalMenu = carrito.reduce((total, item) => {
+              const precio = parseFloat(item.price.replace('S/ ', ''));
+              return total + (precio * item.cantidad);
+            }, 0);
+            
+            mensaje += `\nTotal menú: S/ ${totalMenu.toFixed(2)}\n`;
+            mensaje += `Total reserva: S/ 50.00\n`;
+            mensaje += `Total a pagar: S/ ${(totalMenu + 50).toFixed(2)}`;
+          } else {
+            mensaje += `\nTotal: S/ 50.00`;
+          }
+          
+          alert(mensaje);
+          
+          // Limpiar carrito después de confirmar
+          vaciarCarrito();
+          setCurrentPage('home');
+        }}
+      />
             <Footer styles={styles} />
           </div>
         );

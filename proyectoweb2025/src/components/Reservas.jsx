@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const Reservas = ({setCurrentPage }) => {
-  const [selectedDate, setSelectedDate] = useState(10);
+const Reservas = ({ setCurrentPage, selectedDay}) => {
+  const [selectedDate, setSelectedDate] = useState(selectedDay || 10);
   const [selectedTime, setSelectedTime] = useState('7:30 PM');
   const [numPersonas, setNumPersonas] = useState(4);
 
@@ -304,7 +304,7 @@ const Reservas = ({setCurrentPage }) => {
                 fontSize: '32px',
                 fontWeight: '700',
                 color: '#E89A5F'
-              }}>S/ 0.00</div>
+              }}>S/ 50.00</div>
             </div>
 
             <button 

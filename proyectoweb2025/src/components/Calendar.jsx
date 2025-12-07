@@ -1,6 +1,13 @@
 import React from 'react';
 
-const Calendar = ({ styles, selectedDay, setSelectedDay }) => {
+const Calendar = ({ styles, selectedDay, setSelectedDay, onDateSelect }) => {
+  const handleDayClick = (day) => {
+    setSelectedDay(day);
+    if (onDateSelect) {
+      onDateSelect(day);
+    }
+  };
+
   return (
     <div style={styles.calendarWidget}>
       <div style={styles.calendarHeader}>
@@ -11,7 +18,7 @@ const Calendar = ({ styles, selectedDay, setSelectedDay }) => {
         </div>
       </div>
       <div style={styles.calendarGrid}>
-        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, idx) => (
+        {['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((day, idx) => (
           <div key={idx} style={styles.dayLabel}>{day}</div>
         ))}
         <div style={styles.dayCell}></div>
@@ -21,7 +28,7 @@ const Calendar = ({ styles, selectedDay, setSelectedDay }) => {
           return (
             <div
               key={dayNum}
-              onClick={() => setSelectedDay(dayNum)}
+              onClick={() => handleDayClick(dayNum)}
               style={{
                 ...styles.dayCell,
                 ...(selectedDay === dayNum ? styles.dayCellSelected : {})

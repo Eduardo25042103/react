@@ -5,8 +5,8 @@ import visa from '../assets/visa.png';
 import mastercard from '../assets/mastercard.png';
 import efectivo from '../assets/efectivo.png';
 
-const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
-  const [selectedPayment, setSelectedPayment] = useState(null);
+const ConfirmarPago = ({ reservaData, onBack, onConfirm, selectedPayment, carrito }) => {
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(selectedPayment);
   const [cardData, setCardData] = useState({
     numero: '',
     vencimiento: '',
@@ -16,28 +16,28 @@ const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
 
   const paymentMethods = [
     { 
-      id: 'yape', 
+      id: 0, 
       name: 'Yape', 
       image: yape,
     },
     { 
-      id: 'plin', 
-      name: 'Plin', 
-      image: plin,
-    },
-    { 
-      id: 'visa', 
+      id: 1, 
       name: 'Visa', 
       image: visa,
     },
     { 
-      id: 'mastercard', 
+      id: 2, 
+      name: 'Plin', 
+      image: plin,
+    },
+    { 
+      id: 3, 
       name: 'Mastercard', 
       image: mastercard
     },
     { 
-      id: 'efectivo', 
-      name: 'Pago en efectivo', 
+      id: 4, 
+      name: 'Efectivo', 
       image: efectivo
     }
   ];
@@ -69,24 +69,41 @@ const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
   };
 
   const handleConfirm = () => {
-    if (!selectedPayment) {
+    if (selectedPaymentMethod === null) {
       alert('Por favor selecciona un método de pago');
       return;
     }
 
-    if (selectedPayment !== 'efectivo' && (!cardData.numero || !cardData.vencimiento || !cardData.cvv || !cardData.titular)) {
-      alert('Por favor completa todos los datos de la tarjeta');
-      return;
+    const paymentMethodName = paymentMethods.find(p => p.id === selectedPaymentMethod)?.name || 'Efectivo';
+
+    if (selectedPaymentMethod !== 4 && selectedPaymentMethod !== 0 && selectedPaymentMethod !== 2) {
+      if (!cardData.numero || !cardData.vencimiento || !cardData.cvv || !cardData.titular) {
+        alert('Por favor completa todos los datos de la tarjeta');
+        return;
+      }
     }
 
     onConfirm?.({
       ...reservaData,
-      paymentMethod: selectedPayment,
-      cardData: selectedPayment !== 'efectivo' ? cardData : null
+      paymentMethod: paymentMethodName,
+      cardData: (selectedPaymentMethod !== 4 && selectedPaymentMethod !== 0 && selectedPaymentMethod !== 2) ? cardData : null
     });
   };
 
-  const needsCardData = selectedPayment && selectedPayment !== 'efectivo' && selectedPayment !== 'yape' && selectedPayment !== 'plin';
+  const needsCardData = selectedPaymentMethod !== null && selectedPaymentMethod !== 4 && selectedPaymentMethod !== 0 && selectedPaymentMethod !== 2;
+
+  // Calcular total del menú
+  const calcularTotalMenu = () => {
+    if (!carrito || carrito.length === 0) return 0;
+    return carrito.reduce((total, item) => {
+      const precio = parseFloat(item.price.replace('S/ ', ''));
+      return total + (precio * item.cantidad);
+    }, 0);
+  };
+
+  const totalMenu = calcularTotalMenu();
+  const totalReserva = 50.00;
+  const totalFinal = totalMenu + totalReserva;
 
   return (
     <div style={{
@@ -111,7 +128,7 @@ const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
           <p style={{
             fontSize: '14px',
             color: '#666'
-          }}>Estas a un paso de asegurar tu mesa en El Pino</p>
+          }}>Estás a un paso de asegurar tu mesa en El Pino</p>
         </div>
 
         <div style={{
@@ -138,7 +155,19 @@ const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
                   fontWeight: '600',
                   color: '#333',
                   margin: 0
-                }}>Metodos de pago</h3>
+                }}>Métodos de pago</h3>
+                {selectedPaymentMethod !== null && (
+                  <span style={{
+                    background: '#E8F5E9',
+                    color: '#2E7D32',
+                    padding: '4px 10px',
+                    borderRadius: '12px',
+                    fontSize: '11px',
+                    fontWeight: '600'
+                  }}>
+                    ✓ Preseleccionado
+                  </span>
+                )}
               </div>
 
               <div style={{
@@ -150,19 +179,19 @@ const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
                 {paymentMethods.map((method) => (
                   <button
                     key={method.id}
-                    onClick={() => setSelectedPayment(method.id)}
+                    onClick={() => setSelectedPaymentMethod(method.id)}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: '12px',
                       padding: '16px',
-                      background: selectedPayment === method.id ? '#FFF5EE' : 'white',
-                      border: selectedPayment === method.id ? '2px solid #E89A5F' : '1px solid #e5e5e5',
+                      background: selectedPaymentMethod === method.id ? '#FFF5EE' : 'white',
+                      border: selectedPaymentMethod === method.id ? '2px solid #E89A5F' : '1px solid #e5e5e5',
                       borderRadius: '12px',
                       cursor: 'pointer',
                       transition: 'all 0.3s',
                       fontSize: '14px',
-                      fontWeight: selectedPayment === method.id ? '600' : '400',
+                      fontWeight: selectedPaymentMethod === method.id ? '600' : '400',
                       color: '#333'
                     }}
                   >
@@ -214,7 +243,7 @@ const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
                     fontWeight: '500',
                     color: '#333',
                     marginBottom: '8px'
-                  }}>Numero de tarjeta</label>
+                  }}>Número de tarjeta</label>
                   <input
                     type="text"
                     name="numero"
@@ -305,7 +334,7 @@ const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
                     name="titular"
                     value={cardData.titular}
                     onChange={handleCardChange}
-                    placeholder="Nombre"
+                    placeholder="Nombre completo"
                     style={{
                       width: '100%',
                       padding: '12px 16px',
@@ -337,6 +366,77 @@ const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
                 marginBottom: '25px'
               }}>Resumen de reserva</h3>
 
+              {/* Menú seleccionado */}
+              {carrito && carrito.length > 0 && (
+                <div style={{
+                  marginBottom: '25px',
+                  paddingBottom: '20px',
+                  borderBottom: '1px solid #e5e5e5'
+                }}>
+                  <h4 style={{
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    color: '#333',
+                    marginBottom: '15px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    🍽️ Menú seleccionado
+                  </h4>
+                  
+                  {carrito.map((item, idx) => (
+                    <div key={idx} style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: '10px 0',
+                      borderBottom: idx < carrito.length - 1 ? '1px solid #f5f5f5' : 'none'
+                    }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{
+                          fontSize: '13px',
+                          fontWeight: '600',
+                          color: '#333',
+                          marginBottom: '2px'
+                        }}>
+                          {item.name}
+                        </div>
+                        <div style={{
+                          fontSize: '11px',
+                          color: '#999'
+                        }}>
+                          {item.cantidad} x {item.price}
+                        </div>
+                      </div>
+                      <div style={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#E89A5F'
+                      }}>
+                        S/ {(parseFloat(item.price.replace('S/ ', '')) * item.cantidad).toFixed(2)}
+                      </div>
+                    </div>
+                  ))}
+                  
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingTop: '12px',
+                    marginTop: '12px',
+                    borderTop: '1px solid #e5e5e5'
+                  }}>
+                    <span style={{ fontSize: '13px', fontWeight: '600', color: '#666' }}>
+                      Subtotal menú:
+                    </span>
+                    <span style={{ fontSize: '16px', fontWeight: '700', color: '#E89A5F' }}>
+                      S/ {totalMenu.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              )}
+
               <div style={{
                 background: '#F9F9F9',
                 padding: '20px',
@@ -349,158 +449,190 @@ const ConfirmarPago = ({reservaData, onBack, onConfirm }) => {
                   marginBottom: '12px',
                   paddingBottom: '12px',
                   borderBottom: '1px solid #e5e5e5'
-                }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Nombre</span>
-                  <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
-                    {reservaData?.nombre} {reservaData?.apellido}
-                  </span>
-                </div>
+                  }}>
+              <span style={{ fontSize: '13px', color: '#666' }}>Nombre</span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
+                {reservaData?.nombre} {reservaData?.apellido}
+              </span>
+            </div>
 
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginBottom: '12px',
-                  paddingBottom: '12px',
-                  borderBottom: '1px solid #e5e5e5'
-                }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Fecha</span>
-                  <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
-                    {reservaData?.selectedDate} Octubre 2025
-                  </span>
-                </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '12px',
+              paddingBottom: '12px',
+              borderBottom: '1px solid #e5e5e5'
+            }}>
+              <span style={{ fontSize: '13px', color: '#666' }}>Fecha</span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
+                {reservaData?.selectedDate} Octubre 2025
+              </span>
+            </div>
 
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginBottom: '12px',
-                  paddingBottom: '12px',
-                  borderBottom: '1px solid #e5e5e5'
-                }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Hora</span>
-                  <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
-                    {reservaData?.selectedTime}
-                  </span>
-                </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '12px',
+              paddingBottom: '12px',
+              borderBottom: '1px solid #e5e5e5'
+            }}>
+              <span style={{ fontSize: '13px', color: '#666' }}>Hora</span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
+                {reservaData?.selectedTime}
+              </span>
+            </div>
 
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginBottom: '12px',
-                  paddingBottom: '12px',
-                  borderBottom: '1px solid #e5e5e5'
-                }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Mesa</span>
-                  <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
-                    Mesa {reservaData?.mesa?.numero}
-                  </span>
-                </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '12px',
+              paddingBottom: '12px',
+              borderBottom: '1px solid #e5e5e5'
+            }}>
+              <span style={{ fontSize: '13px', color: '#666' }}>Mesa</span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
+                Mesa {reservaData?.mesa?.numero}
+              </span>
+            </div>
 
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginBottom: '12px',
-                  paddingBottom: '12px',
-                  borderBottom: '1px solid #e5e5e5'
-                }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Personas</span>
-                  <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
-                    {reservaData?.personas} personas
-                  </span>
-                </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '12px',
+              paddingBottom: '12px',
+              borderBottom: '1px solid #e5e5e5'
+            }}>
+              <span style={{ fontSize: '13px', color: '#666' }}>Personas</span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
+                {reservaData?.personas} personas
+              </span>
+            </div>
 
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between'
-                }}>
-                  <span style={{ fontSize: '13px', color: '#666' }}>Ambiente</span>
-                  <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
-                    {reservaData?.mesa?.ambiente === 'interior' ? 'Interior' : 'Terraza'}
-                  </span>
-                </div>
-              </div>
-
-              <div style={{
-                background: '#FFF5EE',
-                padding: '20px',
-                borderRadius: '12px',
-                marginBottom: '25px',
-                textAlign: 'center'
-              }}>
-                <div style={{
-                  fontSize: '13px',
-                  color: '#666',
-                  marginBottom: '8px'
-                }}>Total a pagar</div>
-                <div style={{
-                  fontSize: '36px',
-                  fontWeight: '700',
-                  color: '#E89A5F'
-                }}>S/50.00</div>
-              </div>
-
-              <button
-                onClick={handleConfirm}
-                style={{
-                  width: '100%',
-                  padding: '16px',
-                  background: '#E89A5F',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '10px',
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  marginBottom: '12px',
-                  transition: 'all 0.3s'
-                }}
-              >
-                Confirmar y pagar S/50.00
-              </button>
-
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                fontSize: '11px',
-                color: '#999',
-                marginBottom: '12px'
-              }}>
-                <span>Tus datos estan protegidos</span>
-              </div>
-
-              <div style={{
-                fontSize: '11px',
-                color: '#999',
-                textAlign: 'center'
-              }}>
-                Transaccion segura y encriptada
-              </div>
-
-              <button
-                onClick={onBack}
-                style={{
-                  width: '100%',
-                  padding: '14px',
-                  background: 'transparent',
-                  color: '#666',
-                  border: '1px solid #e5e5e5',
-                  borderRadius: '10px',
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  marginTop: '15px',
-                  transition: 'all 0.3s'
-                }}
-              >
-                Volver
-              </button>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between'
+            }}>
+              <span style={{ fontSize: '13px', color: '#666' }}>Ambiente</span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
+                {reservaData?.mesa?.ambiente === 'interior' ? 'Interior' : 'Terraza'}
+              </span>
             </div>
           </div>
+
+          <div style={{
+            background: '#FFF5EE',
+            padding: '20px',
+            borderRadius: '12px',
+            marginBottom: '25px'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '8px'
+            }}>
+              <span style={{ fontSize: '13px', color: '#666' }}>Costo de reserva:</span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
+                S/ {totalReserva.toFixed(2)}
+              </span>
+            </div>
+            
+            {totalMenu > 0 && (
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginBottom: '12px',
+                paddingBottom: '12px',
+                borderBottom: '1px solid #FFE8CC'
+              }}>
+                <span style={{ fontSize: '13px', color: '#666' }}>Costo del menú:</span>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>
+                  S/ {totalMenu.toFixed(2)}
+                </span>
+              </div>
+            )}
+            
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingTop: totalMenu > 0 ? '12px' : '0'
+            }}>
+              <span style={{ fontSize: '14px', color: '#666', fontWeight: '600' }}>
+                Total a pagar:
+              </span>
+              <span style={{
+                fontSize: '32px',
+                fontWeight: '700',
+                color: '#E89A5F'
+              }}>
+                S/ {totalFinal.toFixed(2)}
+              </span>
+            </div>
+          </div>
+
+          <button
+            onClick={handleConfirm}
+            style={{
+              width: '100%',
+              padding: '16px',
+              background: '#E89A5F',
+              color: 'white',
+              border: 'none',
+              borderRadius: '10px',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              marginBottom: '12px',
+              transition: 'all 0.3s'
+            }}
+          >
+            Confirmar y pagar S/ {totalFinal.toFixed(2)}
+          </button>
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px',
+            fontSize: '11px',
+            color: '#999',
+            marginBottom: '12px'
+          }}>
+            <span>🔒 Tus datos están protegidos</span>
+          </div>
+
+          <div style={{
+            fontSize: '11px',
+            color: '#999',
+            textAlign: 'center'
+          }}>
+            Transacción segura y encriptada
+          </div>
+
+          <button
+            onClick={onBack}
+            style={{
+              width: '100%',
+              padding: '14px',
+              background: 'transparent',
+              color: '#666',
+              border: '1px solid #e5e5e5',
+              borderRadius: '10px',
+              fontSize: '14px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              marginTop: '15px',
+              transition: 'all 0.3s'
+            }}
+          >
+            ← Volver
+          </button>
         </div>
       </div>
     </div>
-  );
+  </div>
+</div>
+);
 };
 
 export default ConfirmarPago;
